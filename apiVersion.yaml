@@ -1,0 +1,76 @@
+openapi: 3.0.0
+info:
+  title: Abn Amro Customer API
+  version: 1.0.0
+
+paths:
+  /registerCustomer:
+    post:
+      summary: Register a new customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                address:
+                  type: string
+                dateOfBirth:
+                  type: string
+                idDocument:
+                  type: string
+                username:
+                  type: string
+      responses:
+          '201':
+            description: customer created
+          '400':
+            description: bad input parameter
+
+  /generateToken:
+    get:
+      summary: Generate a token for a given username
+      parameters:
+        - name: username
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: token created
+        '400':
+          description: bad input parameter
+
+  /logonCustomer:
+    get:
+      summary: Log on a customer with a given token
+      parameters:
+        - name: token
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: customer logged on
+        '400':
+          description: invalid token
+
+  /getAccountOverview:
+    get:
+      summary: Get an account overview for a logged in customer
+      parameters:
+        - name: token
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: account overview retrieved
+        '400':
+          description: invalid token or customer didn't logon
